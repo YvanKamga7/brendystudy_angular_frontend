@@ -1,0 +1,234 @@
+<section class="materie-page">
+
+  <!-- INTESTAZIONE -->
+  <div class="intestazione">
+
+    <div>
+      <h1>Materie</h1>
+
+      <p>
+        Consulta le materie disponibili su BrendyStudy.
+      </p>
+    </div>
+
+    <!-- SOLO ADMIN -->
+    <button
+      *ngIf="isAdmin() && !mostraForm"
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="apriForm()"
+    >
+      + Aggiungi materia
+    </button>
+
+  </div>
+
+
+  <!-- ERRORE -->
+  <div
+    *ngIf="erroreMsg"
+    class="errore"
+  >
+    {{ erroreMsg }}
+  </div>
+
+
+  <!-- SUCCESSO -->
+  <div
+    *ngIf="successoMsg"
+    class="successo"
+  >
+    {{ successoMsg }}
+  </div>
+
+
+  <!-- FORM AGGIUNTA MATERIA - SOLO ADMIN -->
+  <mat-card
+    *ngIf="isAdmin() && mostraForm"
+    class="form-card"
+  >
+
+    <mat-card-header>
+
+      <mat-card-title>
+        Nuova materia
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Inserisci i dati della nuova materia
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+      <!-- NOME -->
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Nome</mat-label>
+
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="nuovaMateria.nome"
+          placeholder="Esempio: Fisica"
+        />
+
+      </mat-form-field>
+
+
+      <!-- DESCRIZIONE -->
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Descrizione</mat-label>
+
+        <textarea
+          matInput
+          rows="4"
+          [(ngModel)]="nuovaMateria.descrizione"
+          placeholder="Descrizione della materia"
+        ></textarea>
+
+      </mat-form-field>
+
+    </mat-card-content>
+
+
+    <mat-card-actions>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="aggiungiMateria()"
+      >
+        Aggiungi materia
+      </button>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="annullaForm()"
+      >
+        Annulla
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+
+  <!-- CARICAMENTO -->
+  <div
+    *ngIf="caricamento"
+    class="caricamento"
+  >
+
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>
+      Caricamento materie...
+    </p>
+
+  </div>
+
+
+  <!-- NESSUNA MATERIA -->
+  <mat-card
+    *ngIf="
+      !caricamento &&
+      materie.length === 0
+    "
+    class="nessuna-materia"
+  >
+
+    <mat-card-content>
+
+      <h2>
+        Nessuna materia
+      </h2>
+
+      <p>
+        Non ci sono ancora materie disponibili.
+      </p>
+
+    </mat-card-content>
+
+  </mat-card>
+
+
+  <!-- LISTA MATERIE -->
+  <div
+    *ngIf="
+      !caricamento &&
+      materie.length > 0
+    "
+    class="lista-materie"
+  >
+
+    <mat-card
+      *ngFor="let materia of materie"
+      class="materia-card"
+    >
+
+      <mat-card-header>
+
+        <mat-card-title>
+          {{ materia.nome }}
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Materia #{{ materia.idMateria }}
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <p
+          *ngIf="materia.descrizione"
+          class="descrizione"
+        >
+          {{ materia.descrizione }}
+        </p>
+
+        <p
+          *ngIf="!materia.descrizione"
+          class="nessuna-descrizione"
+        >
+          Nessuna descrizione disponibile.
+        </p>
+
+      </mat-card-content>
+
+
+      <!-- ELIMINA VISIBILE SOLO ALL'ADMIN -->
+      <mat-card-actions
+        *ngIf="isAdmin()"
+      >
+
+        <button
+          mat-stroked-button
+          color="warn"
+          type="button"
+          (click)="eliminaMateria(materia)"
+        >
+          Elimina
+        </button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+  </div>
+
+</section>

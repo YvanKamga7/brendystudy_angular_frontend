@@ -1,0 +1,203 @@
+<!-- UTILISATEUR NON CONNECTÉ -->
+<section
+  *ngIf="!utenteLoggato"
+  class="home"
+>
+  <mat-card class="hero-card">
+
+    <mat-card-content>
+
+      <h1>Benvenuto su BrendyStudy</h1>
+
+      <p>
+        Trova studenti disponibili ad aiutarti nelle materie
+        che vuoi approfondire e condividi le tue competenze
+        con gli altri studenti.
+      </p>
+
+      <div class="azioni">
+
+        <a
+          mat-raised-button
+          color="primary"
+          routerLink="/login"
+        >
+          Accedi
+        </a>
+
+        <a
+          mat-stroked-button
+          color="primary"
+          routerLink="/registrazione"
+        >
+          Registrati
+        </a>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+</section>
+
+
+<!-- UTILISATEUR CONNECTÉ -->
+<section
+  *ngIf="utenteLoggato"
+  class="home-dashboard"
+>
+
+  <!-- BENVENUTO -->
+  <mat-card class="welcome-card">
+
+    <mat-card-content>
+
+      <h1>
+        Benvenuto
+        {{ utenteLoggato.nome }}
+        {{ utenteLoggato.cognome }}
+      </h1>
+
+      <p>
+        <strong>Ruolo:</strong>
+        {{ utenteLoggato.ruolo }}
+      </p>
+
+    </mat-card-content>
+
+  </mat-card>
+
+
+  <!-- ERRORE -->
+  <div
+    *ngIf="erroreMsg"
+    class="errore"
+  >
+    {{ erroreMsg }}
+  </div>
+
+
+  <!-- LE MIE MATERIE -->
+  <mat-card class="sezione-card">
+
+    <mat-card-header>
+
+      <mat-card-title>
+        Le mie materie
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Materie in cui sei disponibile come tutor
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+      <!-- CARICAMENTO -->
+      <div
+        *ngIf="caricamento"
+        class="caricamento"
+      >
+        <mat-spinner diameter="40"></mat-spinner>
+
+        <p>Caricamento...</p>
+      </div>
+
+
+      <!-- NESSUNA COMPETENZA -->
+      <div
+        *ngIf="
+          !caricamento &&
+          competenze.length === 0
+        "
+        class="nessun-elemento"
+      >
+        <p>
+          Non hai ancora aggiunto competenze.
+        </p>
+
+        <a
+          mat-raised-button
+          color="primary"
+          routerLink="/competenze"
+        >
+          Aggiungi competenza
+        </a>
+      </div>
+
+
+      <!-- COMPETENZE -->
+      <div
+        *ngIf="
+          !caricamento &&
+          competenze.length > 0
+        "
+        class="lista-competenze"
+      >
+
+        <mat-card
+          *ngFor="let competenza of competenze"
+          class="competenza-card"
+        >
+
+          <mat-card-content>
+
+            <h3>
+              {{ competenza.materia?.nome }}
+            </h3>
+
+            <p>
+              <strong>Livello:</strong>
+              {{ competenza.livello }}
+            </p>
+
+            <p *ngIf="competenza.descrizione">
+              {{ competenza.descrizione }}
+            </p>
+
+          </mat-card-content>
+
+        </mat-card>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+
+  <!-- GESTIONE ACCOUNT -->
+  <mat-card class="sezione-card account-card">
+
+    <mat-card-header>
+
+      <mat-card-title>
+        Gestione account
+      </mat-card-title>
+
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <p>
+        Puoi bloccare il tuo account.
+        Dopo il blocco non potrai più effettuare
+        l'accesso fino alla riattivazione.
+      </p>
+
+      <button
+        mat-stroked-button
+        color="warn"
+        type="button"
+        (click)="bloccaAccount()"
+      >
+        Blocca account
+      </button>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</section>

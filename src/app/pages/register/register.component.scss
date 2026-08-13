@@ -1,0 +1,66 @@
+.register-page {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 50px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 700px;
+  padding: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-bottom: 10px;
+}
+
+.errore {
+  padding: 14px;
+  margin: 18px 0;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #b3261e;
+}
+
+.successo {
+  padding: 14px;
+  margin: 18px 0;
+  border-radius: 6px;
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+button[type='submit'] {
+  min-height: 46px;
+  margin-top: 6px;
+}
+
+mat-spinner {
+  margin: 0 auto;
+}
+
+@media (max-width: 700px) {
+  .register-page {
+    padding-top: 25px;
+  }
+
+  .register-card {
+    padding: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,60 @@
+.tutor-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.titolo {
+  margin-bottom: 24px;
+}
+
+.titolo h1 {
+  margin-bottom: 8px;
+}
+
+.titolo p {
+  margin: 0;
+  color: #666;
+}
+
+.selezione-materia {
+  margin-bottom: 24px;
+}
+
+.full-width {
+  width: 100%;
+  max-width: 500px;
+}
+
+.caricamento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 0;
+}
+
+.errore {
+  padding: 14px;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #b3261e;
+  margin-bottom: 20px;
+}
+
+.nessun-tutor {
+  text-align: center;
+  padding: 24px;
+}
+
+.lista-tutor {
+  display: grid;
+  gap: 20px;
+}
+
+.tutor-card {
+  padding: 8px;
+}
+
+.tutor-card p {
+  margin: 10px 0;
+}

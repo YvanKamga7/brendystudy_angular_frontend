@@ -1,0 +1,315 @@
+.appuntamenti-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+
+/* =========================
+   TITOLO
+   ========================= */
+
+.titolo {
+  margin-bottom: 30px;
+}
+
+.titolo h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.titolo p {
+  margin: 0;
+  color: #667085;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+
+/* =========================
+   MESSAGGI
+   ========================= */
+
+.errore,
+.successo {
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.errore {
+  background: #fdecec;
+  color: #b42318;
+  border: 1px solid #f7c7c4;
+}
+
+.successo {
+  background: #ecfdf3;
+  color: #067647;
+  border: 1px solid #abefc6;
+}
+
+
+/* =========================
+   FORM APPUNTAMENTO
+   ========================= */
+
+.form-card {
+  margin-bottom: 32px;
+  padding: 10px;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.form-card mat-card-header {
+  padding-bottom: 10px;
+}
+
+.form-card mat-card-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.form-card mat-card-subtitle {
+  margin-top: 4px;
+}
+
+.form-card mat-card-content {
+  padding-top: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 4px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-card mat-card-actions {
+  padding: 8px 16px 18px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.form-card button {
+  min-width: 150px;
+  min-height: 42px;
+  border-radius: 10px;
+}
+
+
+/* =========================
+   CARICAMENTO
+   ========================= */
+
+.caricamento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 45px 0;
+  color: #667085;
+}
+
+
+/* =========================
+   NESSUN APPUNTAMENTO
+   ========================= */
+
+.nessun-appuntamento {
+  padding: 32px;
+  text-align: center;
+  border-radius: 14px;
+}
+
+.nessun-appuntamento h2 {
+  margin: 0 0 8px;
+}
+
+.nessun-appuntamento p {
+  margin: 0;
+  color: #667085;
+}
+
+
+/* =========================
+   LISTA APPUNTAMENTI
+   ========================= */
+
+.lista-appuntamenti {
+  display: grid;
+  gap: 22px;
+}
+
+.appuntamento-card {
+  padding: 10px;
+  border-radius: 16px;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.appuntamento-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.appuntamento-card mat-card-title {
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.appuntamento-card mat-card-subtitle {
+  margin-top: 3px;
+}
+
+.appuntamento-card mat-card-content {
+  padding-top: 18px;
+}
+
+.appuntamento-card p {
+  margin: 10px 0;
+  color: #344054;
+  line-height: 1.45;
+}
+
+
+/* =========================
+   DATA / ORA / MODALITÀ
+   ========================= */
+
+.dettagli-appuntamento {
+  display: grid;
+  grid-template-columns: repeat(
+    3,
+    minmax(0, 1fr)
+  );
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.dettagli-appuntamento p {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+
+/* =========================
+   STATO
+   ========================= */
+
+.stato {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.attivo {
+  color: #067647;
+  background: #ecfdf3;
+  border: 1px solid #abefc6;
+}
+
+.annullato {
+  color: #b42318;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+}
+
+
+/* =========================
+   AZIONI CARD
+   ========================= */
+
+.appuntamento-card mat-card-actions {
+  padding: 4px 16px 16px;
+}
+
+.appuntamento-card mat-card-actions button {
+  border-radius: 9px;
+}
+
+
+/* =========================
+   SPINNER
+   ========================= */
+
+mat-card-actions mat-spinner {
+  margin: 0 auto;
+}
+
+
+/* =========================
+   RESPONSIVE TABLET
+   ========================= */
+
+@media (max-width: 800px) {
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .dettagli-appuntamento {
+    grid-template-columns: 1fr;
+  }
+
+  .titolo h1 {
+    font-size: 28px;
+  }
+}
+
+
+/* =========================
+   RESPONSIVE MOBILE
+   ========================= */
+
+@media (max-width: 550px) {
+
+  .appuntamenti-page {
+    width: 100%;
+  }
+
+  .form-card,
+  .appuntamento-card {
+    border-radius: 12px;
+  }
+
+  .form-card mat-card-actions {
+    flex-direction: column;
+  }
+
+  .form-card mat-card-actions button {
+    width: 100%;
+  }
+
+  .titolo {
+    margin-bottom: 22px;
+  }
+
+  .titolo h1 {
+    font-size: 25px;
+  }
+}

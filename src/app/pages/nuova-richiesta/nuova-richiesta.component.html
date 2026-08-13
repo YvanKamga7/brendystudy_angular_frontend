@@ -1,0 +1,175 @@
+<section class="nuova-richiesta-page">
+
+  <div class="titolo">
+    <h1>Nuova richiesta</h1>
+
+    <p>
+      Seleziona una materia, scegli un tutor disponibile
+      e invia la tua richiesta di supporto.
+    </p>
+  </div>
+
+  <!-- ERREUR -->
+  <div
+    *ngIf="erroreMsg"
+    class="errore"
+  >
+    {{ erroreMsg }}
+  </div>
+
+  <!-- SUCCÈS -->
+  <div
+    *ngIf="successoMsg"
+    class="successo"
+  >
+    {{ successoMsg }}
+  </div>
+
+  <!-- CHARGEMENT MATIÈRES -->
+  <div
+    *ngIf="caricamentoMaterie"
+    class="caricamento"
+  >
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>
+      Caricamento materie...
+    </p>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <mat-card
+    *ngIf="!caricamentoMaterie"
+    class="form-card"
+  >
+
+    <mat-card-content>
+
+      <!-- MATIÈRE -->
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Materia</mat-label>
+
+        <mat-select
+          [(ngModel)]="idMateriaSelezionata"
+          (selectionChange)="cambiaMateria()"
+        >
+
+          <mat-option
+            *ngFor="let materia of materie"
+            [value]="materia.idMateria"
+          >
+            {{ materia.nome }}
+          </mat-option>
+
+        </mat-select>
+
+      </mat-form-field>
+
+      <!-- CHARGEMENT TUTORS -->
+      <div
+        *ngIf="caricamentoTutor"
+        class="caricamento-tutor"
+      >
+        <mat-spinner diameter="32"></mat-spinner>
+
+        <span>
+          Ricerca tutor disponibili...
+        </span>
+      </div>
+
+      <!-- TUTOR -->
+      <mat-form-field
+        *ngIf="
+          !caricamentoTutor &&
+          idMateriaSelezionata !== undefined
+        "
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Tutor</mat-label>
+
+        <mat-select
+          [(ngModel)]="idTutorSelezionato"
+          [disabled]="tutorDisponibili.length === 0"
+        >
+
+          <mat-option
+            *ngFor="let competenza of tutorDisponibili"
+            [value]="competenza.utente?.idUtente"
+          >
+            {{ competenza.utente?.nome }}
+            {{ competenza.utente?.cognome }}
+            -
+            {{ competenza.livello }}
+          </mat-option>
+
+        </mat-select>
+
+      </mat-form-field>
+
+      <!-- AUCUN TUTOR -->
+      <div
+        *ngIf="
+          !caricamentoTutor &&
+          idMateriaSelezionata !== undefined &&
+          tutorDisponibili.length === 0
+        "
+        class="nessun-tutor"
+      >
+        Nessun tutor disponibile per questa materia.
+      </div>
+
+      <!-- MESSAGE -->
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Messaggio</mat-label>
+
+        <textarea
+          matInput
+          rows="5"
+          [(ngModel)]="messaggio"
+          placeholder="Descrivi brevemente l’aiuto di cui hai bisogno"
+        ></textarea>
+
+      </mat-form-field>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [disabled]="
+          invioInCorso ||
+          idMateriaSelezionata === undefined ||
+          idTutorSelezionato === undefined ||
+          !messaggio.trim()
+        "
+        (click)="inviaRichiesta()"
+      >
+        <span *ngIf="!invioInCorso">
+          Invia richiesta
+        </span>
+
+        <mat-spinner
+          *ngIf="invioInCorso"
+          diameter="24"
+        >
+        </mat-spinner>
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+</section>

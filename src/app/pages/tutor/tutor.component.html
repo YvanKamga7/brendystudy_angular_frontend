@@ -1,0 +1,136 @@
+<section class="tutor-page">
+
+  <div class="titolo">
+    <h1>Trova un tutor</h1>
+
+    <p>
+      Seleziona una materia per visualizzare gli studenti disponibili.
+    </p>
+  </div>
+
+  <!-- CARICAMENTO MATERIE -->
+  <div
+    *ngIf="caricamentoMaterie"
+    class="caricamento"
+  >
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>Caricamento materie...</p>
+  </div>
+
+  <!-- ERRORE -->
+  <div
+    *ngIf="erroreMsg && !caricamentoMaterie"
+    class="errore"
+  >
+    {{ erroreMsg }}
+  </div>
+
+  <!-- SELEZIONE MATERIA -->
+  <div
+    *ngIf="!caricamentoMaterie && materie.length > 0"
+    class="selezione-materia"
+  >
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+    >
+      <mat-label>Materia</mat-label>
+
+      <mat-select
+        [(ngModel)]="materiaSelezionata"
+        (selectionChange)="cercaTutor()"
+      >
+
+        <mat-option
+          *ngFor="let materia of materie"
+          [value]="materia.idMateria"
+        >
+          {{ materia.nome }}
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+  </div>
+
+  <!-- CARICAMENTO TUTOR -->
+  <div
+    *ngIf="caricamentoTutor"
+    class="caricamento"
+  >
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>Ricerca tutor...</p>
+  </div>
+
+  <!-- NESSUN TUTOR -->
+  <mat-card
+    *ngIf="
+      !caricamentoTutor &&
+      materiaSelezionata !== undefined &&
+      tutor.length === 0 &&
+      !erroreMsg
+    "
+    class="nessun-tutor"
+  >
+    <mat-card-content>
+      <p>
+        Nessun tutor disponibile per questa materia.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- LISTA TUTOR -->
+  <div
+    *ngIf="
+      !caricamentoTutor &&
+      tutor.length > 0
+    "
+    class="lista-tutor"
+  >
+
+    <mat-card
+      *ngFor="let competenza of tutor"
+      class="tutor-card"
+    >
+
+      <mat-card-header>
+
+        <mat-card-title>
+          {{ competenza.utente?.nome }}
+          {{ competenza.utente?.cognome }}
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          {{ competenza.materia?.nome }}
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <p>
+          <strong>Livello:</strong>
+          {{ competenza.livello }}
+        </p>
+
+        <p *ngIf="competenza.descrizione">
+          <strong>Descrizione:</strong>
+          {{ competenza.descrizione }}
+        </p>
+
+        <p *ngIf="competenza.utente?.email">
+          <strong>Email:</strong>
+          {{ competenza.utente?.email }}
+        </p>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </div>
+
+</section>

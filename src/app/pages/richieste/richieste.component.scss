@@ -1,0 +1,100 @@
+.richieste-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.titolo {
+  margin-bottom: 28px;
+}
+
+.titolo h1 {
+  margin-bottom: 8px;
+}
+
+.titolo p {
+  margin: 0;
+  color: #666;
+  line-height: 1.5;
+}
+
+.errore {
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #b3261e;
+}
+
+.caricamento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px 0;
+}
+
+.sezione-richieste {
+  margin-bottom: 36px;
+}
+
+.sezione-richieste h2 {
+  margin-bottom: 18px;
+  font-size: 24px;
+}
+
+.lista-richieste {
+  display: grid;
+  gap: 20px;
+}
+
+.richiesta-card {
+  padding: 8px;
+}
+
+.richiesta-card p {
+  margin: 10px 0;
+}
+
+.nessuna-richiesta {
+  text-align: center;
+  padding: 24px;
+}
+
+.stato {
+  font-weight: 600;
+}
+
+.attesa {
+  color: #9a6700;
+}
+
+.accettata {
+  color: #1b5e20;
+}
+
+.rifiutata {
+  color: #b3261e;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 16px 16px;
+}
+
+.appuntamento-creato {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .sezione-richieste h2 {
+    font-size: 21px;
+  }
+}

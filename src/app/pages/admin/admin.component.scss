@@ -1,0 +1,83 @@
+.admin-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.titolo {
+  margin-bottom: 28px;
+}
+
+.titolo h1 {
+  margin-bottom: 8px;
+}
+
+.titolo p {
+  margin: 0;
+  color: #666;
+}
+
+.errore {
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #b3261e;
+}
+
+.successo {
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.caricamento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px 0;
+}
+
+.utenti-card {
+  padding: 8px;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  font-weight: 600;
+}
+
+.stato {
+  font-weight: 600;
+}
+
+.attivo {
+  color: #1b5e20;
+}
+
+.bloccato {
+  color: #b3261e;
+}
+
+.admin-label {
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 800px) {
+
+  table {
+    min-width: 850px;
+  }
+}

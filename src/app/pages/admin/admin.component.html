@@ -1,0 +1,282 @@
+<section class="admin-page">
+
+  <div class="titolo">
+
+    <h1>Amministrazione</h1>
+
+    <p>
+      Gestisci gli utenti registrati su BrendyStudy.
+    </p>
+
+  </div>
+
+  <div
+    *ngIf="erroreMsg"
+    class="errore"
+  >
+    {{ erroreMsg }}
+  </div>
+
+  <div
+    *ngIf="successoMsg"
+    class="successo"
+  >
+    {{ successoMsg }}
+  </div>
+
+  <div
+    *ngIf="caricamento"
+    class="caricamento"
+  >
+
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>
+      Caricamento utenti...
+    </p>
+
+  </div>
+
+  <mat-card
+    *ngIf="!caricamento"
+    class="utenti-card"
+  >
+
+    <mat-card-header>
+
+      <mat-card-title>
+        Utenti registrati
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Totale utenti: {{ utenti.length }}
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="table-container">
+
+        <table
+          mat-table
+          [dataSource]="utenti"
+        >
+
+          <!-- ID -->
+
+          <ng-container matColumnDef="id">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              ID
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let utente"
+            >
+              {{ utente.idUtente }}
+            </td>
+
+          </ng-container>
+
+
+          <!-- NOME -->
+
+          <ng-container matColumnDef="nome">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Nome
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let utente"
+            >
+              {{ utente.nome }}
+              {{ utente.cognome }}
+            </td>
+
+          </ng-container>
+
+
+          <!-- USERNAME -->
+
+          <ng-container matColumnDef="username">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Username
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let utente"
+            >
+              {{ utente.username }}
+            </td>
+
+          </ng-container>
+
+
+          <!-- EMAIL -->
+
+          <ng-container matColumnDef="email">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Email
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let utente"
+            >
+              {{ utente.email }}
+            </td>
+
+          </ng-container>
+
+
+          <!-- RUOLO -->
+
+          <ng-container matColumnDef="ruolo">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Ruolo
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let utente"
+            >
+              {{ utente.ruolo }}
+            </td>
+
+          </ng-container>
+
+
+          <!-- STATO -->
+
+          <ng-container matColumnDef="stato">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Stato
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let utente"
+            >
+
+              <span
+                class="stato"
+                [class.attivo]="
+                  utente.stato === 'ATTIVO'
+                "
+                [class.bloccato]="
+                  utente.stato === 'BLOCCATO'
+                "
+              >
+                {{ utente.stato }}
+              </span>
+
+            </td>
+
+          </ng-container>
+
+
+          <!-- AZIONI -->
+
+          <ng-container matColumnDef="azioni">
+
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Azioni
+            </th>
+
+            <td
+              mat-cell
+              *matCellDef="let utente"
+            >
+
+              <ng-container
+                *ngIf="utente.ruolo !== 'ADMIN'"
+              >
+
+                <button
+                  *ngIf="utente.stato === 'ATTIVO'"
+                  mat-stroked-button
+                  color="warn"
+                  type="button"
+                  (click)="blocca(utente)"
+                >
+                  Blocca
+                </button>
+
+                <button
+                  *ngIf="utente.stato === 'BLOCCATO'"
+                  mat-raised-button
+                  color="primary"
+                  type="button"
+                  (click)="sblocca(utente)"
+                >
+                  Riattiva
+                </button>
+
+              </ng-container>
+
+              <span
+                *ngIf="utente.ruolo === 'ADMIN'"
+                class="admin-label"
+              >
+                Amministratore
+              </span>
+
+            </td>
+
+          </ng-container>
+
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+          >
+          </tr>
+
+          <tr
+            mat-row
+            *matRowDef="
+              let row;
+              columns: displayedColumns
+            "
+          >
+          </tr>
+
+        </table>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</section>

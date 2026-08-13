@@ -1,0 +1,181 @@
+/* =========================
+   ACCUEIL NON CONNECTÉ
+   ========================= */
+
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 60px;
+}
+
+.hero-card {
+  width: 100%;
+  max-width: 800px;
+  padding: 32px;
+  text-align: center;
+}
+
+.hero-card h1 {
+  font-size: 38px;
+  margin-bottom: 20px;
+}
+
+.hero-card p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.azioni {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+
+/* =========================
+   ACCUEIL UTILISATEUR
+   ========================= */
+
+.home-dashboard {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.welcome-card {
+  margin-bottom: 24px;
+  padding: 20px;
+}
+
+.welcome-card h1 {
+  margin: 0 0 12px;
+  font-size: 30px;
+}
+
+.welcome-card p {
+  margin: 0;
+  color: #555;
+}
+
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+.sezione-card {
+  margin-bottom: 24px;
+  padding: 8px;
+}
+
+.sezione-card mat-card-content {
+  padding-top: 20px;
+}
+
+
+/* =========================
+   COMPETENZE / MATERIE
+   ========================= */
+
+.lista-competenze {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  );
+  gap: 16px;
+}
+
+.competenza-card {
+  padding: 8px;
+}
+
+.competenza-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.competenza-card p {
+  margin: 8px 0;
+}
+
+
+/* =========================
+   CARICAMENTO
+   ========================= */
+
+.caricamento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 0;
+}
+
+
+/* =========================
+   NESSUN ELEMENTO
+   ========================= */
+
+.nessun-elemento {
+  text-align: center;
+  padding: 25px;
+}
+
+.nessun-elemento p {
+  margin-bottom: 18px;
+  color: #666;
+}
+
+
+/* =========================
+   ERRORE
+   ========================= */
+
+.errore {
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #b3261e;
+}
+
+
+/* =========================
+   GESTIONE ACCOUNT
+   ========================= */
+
+.account-card p {
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 700px) {
+
+  .hero-card {
+    padding: 20px;
+  }
+
+  .hero-card h1 {
+    font-size: 30px;
+  }
+
+  .welcome-card h1 {
+    font-size: 25px;
+  }
+
+  .azioni {
+    flex-direction: column;
+  }
+
+  .lista-competenze {
+    grid-template-columns: 1fr;
+  }
+}

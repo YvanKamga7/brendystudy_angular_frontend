@@ -1,0 +1,354 @@
+<section class="appuntamenti-page">
+
+  <div class="titolo">
+    <h1>Appuntamenti</h1>
+    <p>
+      Crea e gestisci gli appuntamenti collegati alle richieste accettate.
+    </p>
+  </div>
+
+  <!-- MESSAGGI -->
+  <div *ngIf="erroreMsg" class="errore">
+    {{ erroreMsg }}
+  </div>
+
+  <div *ngIf="successoMsg" class="successo">
+    {{ successoMsg }}
+  </div>
+
+  <!-- FORM CREAZIONE -->
+  <mat-card
+    *ngIf="mostraForm"
+    class="form-card"
+  >
+
+    <mat-card-header>
+      <mat-card-title>
+        Crea appuntamento
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Richiesta #{{ idRichiesta }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div class="form-grid">
+
+        <!-- DATA -->
+        <mat-form-field appearance="outline">
+
+          <mat-label>Data appuntamento</mat-label>
+
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [min]="dataMinima"
+            [(ngModel)]="dataSelezionata"
+            (dateChange)="aggiornaData()"
+            readonly
+          />
+
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          >
+          </mat-datepicker-toggle>
+
+          <mat-datepicker
+            #picker
+          >
+          </mat-datepicker>
+
+          <mat-hint>
+            Seleziona una data futura
+          </mat-hint>
+
+        </mat-form-field>
+
+
+        <!-- ORA -->
+        <mat-form-field appearance="outline">
+
+          <mat-label>Ora appuntamento</mat-label>
+
+          <input
+            matInput
+            [matTimepicker]="timePicker"
+            [(ngModel)]="oraSelezionata"
+            (ngModelChange)="aggiornaOra()"
+            readonly
+          />
+
+          <mat-timepicker-toggle
+            matIconSuffix
+            [for]="timePicker"
+          >
+          </mat-timepicker-toggle>
+
+          <mat-timepicker
+            #timePicker
+          >
+          </mat-timepicker>
+
+          <mat-hint>
+            Seleziona l'orario
+          </mat-hint>
+
+        </mat-form-field>
+
+      </div>
+
+
+      <!-- MODALITÀ -->
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Modalità</mat-label>
+
+        <mat-select
+          [(ngModel)]="nuovoAppuntamento.modalita"
+        >
+
+          <mat-option value="ONLINE">
+            Online
+          </mat-option>
+
+          <mat-option value="PRESENZA">
+            In presenza
+          </mat-option>
+
+        </mat-select>
+
+        <mat-hint>
+          Scegli come svolgere l'incontro
+        </mat-hint>
+
+      </mat-form-field>
+
+
+      <!-- DESCRIZIONE -->
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Descrizione</mat-label>
+
+        <textarea
+          matInput
+          rows="4"
+          [(ngModel)]="nuovoAppuntamento.descrizione"
+          placeholder="Esempio: Ripasso degli esercizi di matematica..."
+        >
+        </textarea>
+
+        <mat-hint>
+          Puoi aggiungere informazioni utili per l'incontro
+        </mat-hint>
+
+      </mat-form-field>
+
+    </mat-card-content>
+
+
+    <mat-card-actions>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [disabled]="invioInCorso"
+        (click)="creaAppuntamento()"
+      >
+
+        <span *ngIf="!invioInCorso">
+          Crea appuntamento
+        </span>
+
+        <mat-spinner
+          *ngIf="invioInCorso"
+          diameter="24"
+        >
+        </mat-spinner>
+
+      </button>
+
+      <button
+        mat-stroked-button
+        type="button"
+        [disabled]="invioInCorso"
+        (click)="annullaCreazione()"
+      >
+        Annulla
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+
+  <!-- CARICAMENTO -->
+  <div
+    *ngIf="caricamento"
+    class="caricamento"
+  >
+
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>
+      Caricamento appuntamenti...
+    </p>
+
+  </div>
+
+
+  <!-- NESSUN APPUNTAMENTO -->
+  <mat-card
+    *ngIf="
+      !caricamento &&
+      appuntamenti.length === 0
+    "
+    class="nessun-appuntamento"
+  >
+
+    <mat-card-content>
+
+      <h2>
+        Nessun appuntamento
+      </h2>
+
+      <p>
+        Non ci sono appuntamenti da visualizzare.
+      </p>
+
+    </mat-card-content>
+
+  </mat-card>
+
+
+  <!-- LISTA APPUNTAMENTI -->
+  <div
+    *ngIf="
+      !caricamento &&
+      appuntamenti.length > 0
+    "
+    class="lista-appuntamenti"
+  >
+
+    <mat-card
+      *ngFor="let appuntamento of appuntamenti"
+      class="appuntamento-card"
+    >
+
+      <mat-card-header>
+
+        <mat-card-title>
+          {{
+            appuntamento.richiesta?.materia?.nome
+              || 'Appuntamento'
+          }}
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Appuntamento #{{ appuntamento.idAppuntamento }}
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div class="dettagli-appuntamento">
+
+          <p>
+            <strong>Data:</strong>
+            {{
+              appuntamento.dataAppuntamento
+                | date:'dd/MM/yyyy'
+            }}
+          </p>
+
+          <p>
+            <strong>Ora:</strong>
+            {{ appuntamento.oraAppuntamento }}
+          </p>
+
+          <p>
+            <strong>Modalità:</strong>
+            {{ appuntamento.modalita }}
+          </p>
+
+        </div>
+
+        <p *ngIf="appuntamento.descrizione">
+          <strong>Descrizione:</strong>
+          {{ appuntamento.descrizione }}
+        </p>
+
+        <p *ngIf="appuntamento.richiesta?.richiedente">
+
+          <strong>Richiedente:</strong>
+
+          {{ appuntamento.richiesta?.richiedente?.nome }}
+          {{ appuntamento.richiesta?.richiedente?.cognome }}
+
+        </p>
+
+        <p *ngIf="appuntamento.richiesta?.tutor">
+
+          <strong>Tutor:</strong>
+
+          {{ appuntamento.richiesta?.tutor?.nome }}
+          {{ appuntamento.richiesta?.tutor?.cognome }}
+
+        </p>
+
+        <p>
+
+          <strong>Stato:</strong>
+
+          <span
+            class="stato"
+            [class.attivo]="
+              appuntamento.stato === 'ATTIVO'
+            "
+            [class.annullato]="
+              appuntamento.stato === 'ANNULLATO'
+            "
+          >
+            {{ appuntamento.stato }}
+          </span>
+
+        </p>
+
+      </mat-card-content>
+
+
+      <mat-card-actions
+        *ngIf="appuntamento.stato === 'ATTIVO'"
+      >
+
+        <button
+          mat-stroked-button
+          color="warn"
+          type="button"
+          (click)="
+            annullaAppuntamento(
+              appuntamento.idAppuntamento!
+            )
+          "
+        >
+          Annulla appuntamento
+        </button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+  </div>
+
+</section>

@@ -1,0 +1,116 @@
+<mat-toolbar color="primary" class="navbar">
+
+  <a
+    mat-button
+    routerLink="/"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="brand"
+  >
+    BrendyStudy
+  </a>
+
+  <span class="spacer"></span>
+
+  <!-- NON CONNECTÉ -->
+  <ng-container *ngIf="!utenteService.isLoggedIn()">
+
+    <a
+      mat-button
+      routerLink="/login"
+      routerLinkActive="active"
+    >
+      Accedi
+    </a>
+
+    <a
+      mat-button
+      routerLink="/registrazione"
+      routerLinkActive="active"
+    >
+      Registrati
+    </a>
+
+  </ng-container>
+
+  <!-- CONNECTÉ -->
+  <ng-container *ngIf="utenteService.isLoggedIn()">
+
+    <!-- HOME : TOUS -->
+    <a
+      mat-button
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Home
+    </a>
+
+    <!-- MATERIE : TOUS -->
+    <a
+      mat-button
+      routerLink="/materie"
+      routerLinkActive="active"
+    >
+      Materie
+    </a>
+
+    <!-- MENU ÉTUDIANT -->
+    <ng-container *ngIf="!utenteService.isAdmin()">
+
+      <a
+        mat-button
+        routerLink="/competenze"
+        routerLinkActive="active"
+      >
+        Le mie competenze
+      </a>
+
+      <a
+        mat-button
+        routerLink="/richieste"
+        routerLinkActive="active"
+      >
+        Richieste
+      </a>
+
+      <a
+        mat-button
+        routerLink="/nuova-richiesta"
+        routerLinkActive="active"
+      >
+        Nuova Richiesta
+      </a>
+
+      <a
+        mat-button
+        routerLink="/appuntamenti"
+        routerLinkActive="active"
+      >
+        Appuntamenti
+      </a>
+
+    </ng-container>
+
+    <!-- MENU ADMIN -->
+    <a
+      *ngIf="utenteService.isAdmin()"
+      mat-button
+      routerLink="/admin"
+      routerLinkActive="active"
+    >
+      Admin
+    </a>
+
+    <!-- LOGOUT : TOUS -->
+    <button
+      mat-button
+      type="button"
+      (click)="logout()"
+    >
+      Esci
+    </button>
+
+  </ng-container>
+
+</mat-toolbar>

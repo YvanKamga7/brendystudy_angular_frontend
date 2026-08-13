@@ -1,0 +1,285 @@
+<section class="competenze-page">
+
+  <!-- EN-TÊTE -->
+  <div class="intestazione">
+
+    <div>
+      <h1>Le mie competenze</h1>
+
+      <p>
+        Gestisci le materie in cui sei disponibile come tutor.
+      </p>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="apriFormNuovaCompetenza()"
+      *ngIf="!mostraForm"
+    >
+      + Aggiungi competenza
+    </button>
+
+  </div>
+
+
+  <!-- ERREUR -->
+  <div
+    *ngIf="erroreMsg"
+    class="errore"
+  >
+    {{ erroreMsg }}
+  </div>
+
+
+  <!-- FORMULAIRE AJOUT / MODIFICATION -->
+  <mat-card
+    *ngIf="mostraForm"
+    class="form-card"
+  >
+
+    <mat-card-header>
+
+      <mat-card-title>
+        {{
+          modificaInCorso
+            ? 'Modifica competenza'
+            : 'Nuova competenza'
+        }}
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        {{
+          modificaInCorso
+            ? 'Modifica i dati della tua competenza'
+            : 'Aggiungi una materia in cui puoi aiutare altri studenti'
+        }}
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+      <div class="form-grid">
+
+        <!-- MATERIA -->
+        <mat-form-field appearance="outline">
+
+          <mat-label>Materia</mat-label>
+
+          <mat-select
+            [(ngModel)]="competenzaForm.idMateria"
+            [disabled]="modificaInCorso"
+          >
+
+            <mat-option
+              *ngFor="let materia of materie"
+              [value]="materia.idMateria"
+            >
+              {{ materia.nome }}
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+
+        <!-- LIVELLO -->
+        <mat-form-field appearance="outline">
+
+          <mat-label>Livello</mat-label>
+
+          <mat-select
+            [(ngModel)]="competenzaForm.livello"
+          >
+
+            <mat-option value="BASE">
+              BASE
+            </mat-option>
+
+            <mat-option value="INTERMEDIO">
+              INTERMEDIO
+            </mat-option>
+
+            <mat-option value="AVANZATO">
+              AVANZATO
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+
+      <!-- DESCRIZIONE -->
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Descrizione</mat-label>
+
+        <textarea
+          matInput
+          rows="4"
+          [(ngModel)]="competenzaForm.descrizione"
+          placeholder="Descrivi brevemente la tua competenza"
+        ></textarea>
+
+      </mat-form-field>
+
+    </mat-card-content>
+
+
+    <mat-card-actions>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="salvaCompetenza()"
+      >
+        {{
+          modificaInCorso
+            ? 'Salva modifiche'
+            : 'Aggiungi'
+        }}
+      </button>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="annullaForm()"
+      >
+        Annulla
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+
+  <!-- CHARGEMENT -->
+  <div
+    *ngIf="caricamento"
+    class="caricamento"
+  >
+
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>
+      Caricamento competenze...
+    </p>
+
+  </div>
+
+
+  <!-- AUCUNE COMPÉTENCE -->
+  <mat-card
+    *ngIf="
+      !caricamento &&
+      competenze.length === 0
+    "
+    class="nessuna-competenza"
+  >
+
+    <mat-card-content>
+
+      <h2>
+        Nessuna competenza
+      </h2>
+
+      <p>
+        Non hai ancora aggiunto nessuna competenza.
+      </p>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="apriFormNuovaCompetenza()"
+      >
+        Aggiungi la prima competenza
+      </button>
+
+    </mat-card-content>
+
+  </mat-card>
+
+
+  <!-- LISTE DES COMPÉTENCES -->
+  <div
+    *ngIf="
+      !caricamento &&
+      competenze.length > 0
+    "
+    class="lista-competenze"
+  >
+
+    <mat-card
+      *ngFor="let competenza of competenze"
+      class="competenza-card"
+    >
+
+      <mat-card-header>
+
+        <mat-card-title>
+          {{ competenza.materia?.nome }}
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Livello {{ competenza.livello }}
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <p
+          *ngIf="competenza.descrizione"
+          class="descrizione"
+        >
+          {{ competenza.descrizione }}
+        </p>
+
+        <p
+          *ngIf="!competenza.descrizione"
+          class="nessuna-descrizione"
+        >
+          Nessuna descrizione.
+        </p>
+
+      </mat-card-content>
+
+
+      <mat-card-actions>
+
+        <button
+          mat-stroked-button
+          color="primary"
+          type="button"
+          (click)="modificaCompetenza(competenza)"
+        >
+          Modifica
+        </button>
+
+        <button
+          mat-stroked-button
+          color="warn"
+          type="button"
+          (click)="eliminaCompetenza(competenza)"
+        >
+          Elimina
+        </button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+  </div>
+
+</section>

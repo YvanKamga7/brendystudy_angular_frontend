@@ -1,0 +1,260 @@
+<section class="richieste-page">
+
+  <div class="titolo">
+    <h1>Richieste di supporto</h1>
+
+    <p>
+      Gestisci le richieste ricevute come tutor
+      e visualizza quelle che hai inviato.
+    </p>
+  </div>
+
+  <!-- ERRORE -->
+  <div
+    *ngIf="erroreMsg"
+    class="errore"
+  >
+    {{ erroreMsg }}
+  </div>
+
+  <!-- CARICAMENTO -->
+  <div
+    *ngIf="caricamento"
+    class="caricamento"
+  >
+    <mat-spinner diameter="45"></mat-spinner>
+
+    <p>
+      Caricamento richieste...
+    </p>
+  </div>
+
+  <!-- RICHIESTE RICEVUTE -->
+  <section
+    *ngIf="!caricamento"
+    class="sezione-richieste"
+  >
+
+    <h2>
+      Richieste ricevute come tutor
+    </h2>
+
+    <mat-card
+      *ngIf="richiesteRicevute.length === 0"
+      class="nessuna-richiesta"
+    >
+      <mat-card-content>
+        <p>
+          Non hai ricevuto richieste di supporto.
+        </p>
+      </mat-card-content>
+    </mat-card>
+
+    <div
+      *ngIf="richiesteRicevute.length > 0"
+      class="lista-richieste"
+    >
+
+      <mat-card
+        *ngFor="let richiesta of richiesteRicevute"
+        class="richiesta-card"
+      >
+
+        <mat-card-header>
+
+          <mat-card-title>
+            {{ richiesta.materia?.nome }}
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Richiesta #{{ richiesta.idRichiesta }}
+          </mat-card-subtitle>
+
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <p *ngIf="richiesta.richiedente">
+            <strong>Studente:</strong>
+
+            {{ richiesta.richiedente.nome }}
+            {{ richiesta.richiedente.cognome }}
+          </p>
+
+          <p>
+            <strong>Messaggio:</strong>
+            {{ richiesta.messaggio }}
+          </p>
+
+          <p *ngIf="richiesta.dataRichiesta">
+            <strong>Data:</strong>
+
+            {{
+              richiesta.dataRichiesta
+                | date:'dd/MM/yyyy HH:mm'
+            }}
+          </p>
+
+          <p>
+            <strong>Stato:</strong>
+
+            <span
+              class="stato"
+              [class.attesa]="richiesta.stato === 'IN_ATTESA'"
+              [class.accettata]="richiesta.stato === 'ACCETTATA'"
+              [class.rifiutata]="richiesta.stato === 'RIFIUTATA'"
+            >
+              {{ richiesta.stato }}
+            </span>
+          </p>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+
+          <!-- ACCETTA / RIFIUTA -->
+          <ng-container
+            *ngIf="richiesta.stato === 'IN_ATTESA'"
+          >
+
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="accetta(richiesta.idRichiesta!)"
+            >
+              Accetta
+            </button>
+
+            <button
+              mat-stroked-button
+              color="warn"
+              type="button"
+              (click)="rifiuta(richiesta.idRichiesta!)"
+            >
+              Rifiuta
+            </button>
+
+          </ng-container>
+
+          <!-- CREA APPUNTAMENTO -->
+          <button
+            *ngIf="
+              richiesta.stato === 'ACCETTATA' &&
+              !haAppuntamento(richiesta)
+            "
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="creaAppuntamento(richiesta)"
+          >
+            Crea appuntamento
+          </button>
+
+          <!-- APPUNTAMENTO GIÀ CREATO -->
+          <span
+            *ngIf="
+              richiesta.stato === 'ACCETTATA' &&
+              haAppuntamento(richiesta)
+            "
+            class="appuntamento-creato"
+          >
+            Appuntamento già creato
+          </span>
+
+        </mat-card-actions>
+
+      </mat-card>
+
+    </div>
+
+  </section>
+
+  <!-- RICHIESTE INVIATE -->
+  <section
+    *ngIf="!caricamento"
+    class="sezione-richieste"
+  >
+
+    <h2>
+      Richieste inviate
+    </h2>
+
+    <mat-card
+      *ngIf="richiesteInviate.length === 0"
+      class="nessuna-richiesta"
+    >
+      <mat-card-content>
+        <p>
+          Non hai ancora inviato richieste di supporto.
+        </p>
+      </mat-card-content>
+    </mat-card>
+
+    <div
+      *ngIf="richiesteInviate.length > 0"
+      class="lista-richieste"
+    >
+
+      <mat-card
+        *ngFor="let richiesta of richiesteInviate"
+        class="richiesta-card"
+      >
+
+        <mat-card-header>
+
+          <mat-card-title>
+            {{ richiesta.materia?.nome }}
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Richiesta #{{ richiesta.idRichiesta }}
+          </mat-card-subtitle>
+
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <p *ngIf="richiesta.tutor">
+            <strong>Tutor:</strong>
+
+            {{ richiesta.tutor.nome }}
+            {{ richiesta.tutor.cognome }}
+          </p>
+
+          <p>
+            <strong>Messaggio:</strong>
+            {{ richiesta.messaggio }}
+          </p>
+
+          <p *ngIf="richiesta.dataRichiesta">
+            <strong>Data:</strong>
+
+            {{
+              richiesta.dataRichiesta
+                | date:'dd/MM/yyyy HH:mm'
+            }}
+          </p>
+
+          <p>
+            <strong>Stato:</strong>
+
+            <span
+              class="stato"
+              [class.attesa]="richiesta.stato === 'IN_ATTESA'"
+              [class.accettata]="richiesta.stato === 'ACCETTATA'"
+              [class.rifiutata]="richiesta.stato === 'RIFIUTATA'"
+            >
+              {{ richiesta.stato }}
+            </span>
+          </p>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+  </section>
+
+</section>
