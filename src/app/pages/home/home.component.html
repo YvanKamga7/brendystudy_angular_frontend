@@ -77,127 +77,192 @@
   </div>
 
 
-  <!-- LE MIE MATERIE -->
-  <mat-card class="sezione-card">
+  <!-- ===================================================== -->
+  <!-- DASHBOARD ADMIN -->
+  <!-- ===================================================== -->
 
-    <mat-card-header>
+  <ng-container *ngIf="utenteLoggato.ruolo === 'ADMIN'">
 
-      <mat-card-title>
-        Le mie materie
-      </mat-card-title>
+    <mat-card class="sezione-card">
 
-      <mat-card-subtitle>
-        Materie in cui sei disponibile come tutor
-      </mat-card-subtitle>
+      <mat-card-header>
 
-    </mat-card-header>
+        <mat-card-title>
+          Pannello di amministrazione
+        </mat-card-title>
 
+        <mat-card-subtitle>
+          Gestione della piattaforma BrendyStudy
+        </mat-card-subtitle>
 
-    <mat-card-content>
-
-      <!-- CARICAMENTO -->
-      <div
-        *ngIf="caricamento"
-        class="caricamento"
-      >
-        <mat-spinner diameter="40"></mat-spinner>
-
-        <p>Caricamento...</p>
-      </div>
+      </mat-card-header>
 
 
-      <!-- NESSUNA COMPETENZA -->
-      <div
-        *ngIf="
-          !caricamento &&
-          competenze.length === 0
-        "
-        class="nessun-elemento"
-      >
+      <mat-card-content>
+
         <p>
-          Non hai ancora aggiunto competenze.
+          Da questa sezione puoi gestire gli utenti
+          e le materie disponibili nella piattaforma.
         </p>
 
-        <a
-          mat-raised-button
-          color="primary"
-          routerLink="/competenze"
+        <div class="azioni">
+
+          <a
+            mat-raised-button
+            color="primary"
+            routerLink="/admin"
+          >
+            Gestione utenti
+          </a>
+
+          <a
+            mat-stroked-button
+            color="primary"
+            routerLink="/materie"
+          >
+            Gestione materie
+          </a>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </ng-container>
+
+
+  <!-- ===================================================== -->
+  <!-- DASHBOARD STUDENTE -->
+  <!-- ===================================================== -->
+
+  <ng-container *ngIf="utenteLoggato.ruolo !== 'ADMIN'">
+
+    <!-- LE MIE MATERIE -->
+    <mat-card class="sezione-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Le mie materie
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Materie in cui sei disponibile come tutor
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <!-- CARICAMENTO -->
+        <div
+          *ngIf="caricamento"
+          class="caricamento"
         >
-          Aggiungi competenza
-        </a>
-      </div>
+          <mat-spinner diameter="40"></mat-spinner>
+
+          <p>Caricamento...</p>
+        </div>
 
 
-      <!-- COMPETENZE -->
-      <div
-        *ngIf="
-          !caricamento &&
-          competenze.length > 0
-        "
-        class="lista-competenze"
-      >
-
-        <mat-card
-          *ngFor="let competenza of competenze"
-          class="competenza-card"
+        <!-- NESSUNA COMPETENZA -->
+        <div
+          *ngIf="
+            !caricamento &&
+            competenze.length === 0
+          "
+          class="nessun-elemento"
         >
 
-          <mat-card-content>
+          <p>
+            Non hai ancora aggiunto competenze.
+          </p>
 
-            <h3>
-              {{ competenza.materia?.nome }}
-            </h3>
+          <a
+            mat-raised-button
+            color="primary"
+            routerLink="/competenze"
+          >
+            Aggiungi competenza
+          </a>
 
-            <p>
-              <strong>Livello:</strong>
-              {{ competenza.livello }}
-            </p>
-
-            <p *ngIf="competenza.descrizione">
-              {{ competenza.descrizione }}
-            </p>
-
-          </mat-card-content>
-
-        </mat-card>
-
-      </div>
-
-    </mat-card-content>
-
-  </mat-card>
+        </div>
 
 
-  <!-- GESTIONE ACCOUNT -->
-  <mat-card class="sezione-card account-card">
+        <!-- COMPETENZE -->
+        <div
+          *ngIf="
+            !caricamento &&
+            competenze.length > 0
+          "
+          class="lista-competenze"
+        >
 
-    <mat-card-header>
+          <mat-card
+            *ngFor="let competenza of competenze"
+            class="competenza-card"
+          >
 
-      <mat-card-title>
-        Gestione account
-      </mat-card-title>
+            <mat-card-content>
 
-    </mat-card-header>
+              <h3>
+                {{ competenza.materia?.nome }}
+              </h3>
 
-    <mat-card-content>
+              <p>
+                <strong>Livello:</strong>
+                {{ competenza.livello }}
+              </p>
 
-      <p>
-        Puoi bloccare il tuo account.
-        Dopo il blocco non potrai più effettuare
-        l'accesso fino alla riattivazione.
-      </p>
+              <p *ngIf="competenza.descrizione">
+                {{ competenza.descrizione }}
+              </p>
 
-      <button
-        mat-stroked-button
-        color="warn"
-        type="button"
-        (click)="bloccaAccount()"
-      >
-        Blocca account
-      </button>
+            </mat-card-content>
 
-    </mat-card-content>
+          </mat-card>
 
-  </mat-card>
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <!-- GESTIONE ACCOUNT -->
+    <mat-card class="sezione-card account-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Gestione account
+        </mat-card-title>
+
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <p>
+          Puoi bloccare il tuo account.
+          Dopo il blocco non potrai più effettuare
+          l'accesso fino alla riattivazione.
+        </p>
+
+        <button
+          mat-stroked-button
+          color="warn"
+          type="button"
+          (click)="bloccaAccount()"
+        >
+          Blocca account
+        </button>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </ng-container>
 
 </section>
